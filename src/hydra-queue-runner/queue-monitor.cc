@@ -465,6 +465,8 @@ Step::ptr State::createStep(ref<Store> destStore,
         StringSet features;
         if (i != step->drv->env.end())
             features = step->requiredSystemFeatures = tokenizeString<std::set<std::string>>(i->second);
+        if ((*step->drv).type().isCA())
+            features.insert("ca-derivations");
         if (step->preferLocalBuild)
             features.insert("local");
         if (!features.empty()) {
